@@ -23,7 +23,6 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
 
   return (
     <section id="about-pictures" className="py-24 flex flex-col items-center">
-      {/* 1. Strict Center Alignment Container */}
       <div className="relative flex justify-center items-center w-full min-h-[600px] overflow-hidden mb-16 bg-wokcop-bg">
         
         {finalImages.map((src, i) => {
@@ -72,7 +71,7 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
                   src={src}
                   alt={`Gallery image ${i + 1}`}
                   fill
-                  className="object-cover grayscale contrast-[1.15]"
+                  className="object-cover grayscale contrast-125 brightness-[0.60]"
                   sizes="(max-width: 1200px) 100vw, 320px"
                 />
                 {blendColor && (

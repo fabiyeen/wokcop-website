@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface HeroClientProps {
   bgImage1Url?: string;
@@ -34,6 +34,9 @@ export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps
     textRef.current.style.transform = 'translate3d(0px, 0px, 0)';
   }, []);
 
+  const { scrollY } = useScroll();
+  const titleOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+
   return (
     <section
       ref={sectionRef}
@@ -47,21 +50,33 @@ export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps
       {/* Two images side by side */}
       <div className="absolute inset-0 grid grid-cols-2" aria-hidden="true">
         {/* Left image */}
-        <div
-          className="bg-cover bg-center"
-          style={{
-            backgroundImage: `url('${bg1}')`,
-            filter: 'grayscale(100%) contrast(108%) brightness(0.65)',
-          }}
-        />
+        <div className="relative w-full h-full overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url('${bg1}')`,
+              filter: 'grayscale(100%) contrast(125%) brightness(0.60)',
+            }}
+          />
+          <div 
+            className="absolute inset-0 mix-blend-color opacity-70 pointer-events-none" 
+            style={{ backgroundColor: '#486e7a' }} 
+          />
+        </div>
         {/* Right image */}
-        <div
-          className="bg-cover bg-center"
-          style={{
-            backgroundImage: `url('${bg2}')`,
-            filter: 'grayscale(100%) contrast(108%) brightness(0.65)',
-          }}
-        />
+        <div className="relative w-full h-full overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url('${bg2}')`,
+              filter: 'grayscale(100%) contrast(125%) brightness(0.60)',
+            }}
+          />
+          <div 
+            className="absolute inset-0 mix-blend-color opacity-70 pointer-events-none" 
+            style={{ backgroundColor: '#486e7a' }} 
+          />
+        </div>
       </div>
 
       {/* Subtle dark overlay for text legibility */}
@@ -72,7 +87,10 @@ export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps
       />
 
       {/* Hero text — centered over both images */}
-      <div className="relative z-[10] flex flex-col items-center justify-center text-center px-6 select-none w-full">
+      <motion.div 
+        className="relative z-[10] flex flex-col items-center justify-center text-center px-6 select-none w-full"
+        style={{ opacity: titleOpacity }}
+      >
         <div
           ref={textRef}
           style={{ transition: 'transform 0.08s linear', willChange: 'transform' }}
@@ -122,7 +140,7 @@ export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps
             OFFICIAL SITE
           </motion.span>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

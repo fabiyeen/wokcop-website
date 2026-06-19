@@ -68,7 +68,7 @@ DENGAN VERSATILITY TINGGI, WOKCOP STUDIO MEMBERI LAYANAN FULL PRODUCTION MENCAKU
                   src={src}
                   alt={`Gallery image ${i + 1}`}
                   fill
-                  className="object-cover grayscale contrast-125 brightness-90"
+                  className="object-cover grayscale contrast-125 brightness-[0.60]"
                   sizes="(max-width: 768px) 100vw, 256px"
                 />
                 {style.blendColor && (
