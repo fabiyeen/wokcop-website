@@ -41,6 +41,18 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
             'rotate-[-4deg]'
           ];
 
+          // Alternating blue/brown blend colors
+          const blendColors = [
+            '#486e7a', // 0: Blue
+            '#9c7d5c', // 1: Brown
+            '#486e7a', // 2: Blue
+            '#9c7d5c', // 3: Brown
+            '#486e7a', // 4: Blue
+            '#9c7d5c', // 5: Brown
+            '#486e7a', // 6: Blue
+          ];
+          const blendColor = blendColors[i];
+
           return (
             <motion.div
               key={i}
@@ -63,6 +75,12 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
                   className="object-cover grayscale contrast-[1.15]"
                   sizes="(max-width: 1200px) 100vw, 320px"
                 />
+                {blendColor && (
+                  <div 
+                    className="absolute inset-0 mix-blend-color opacity-70 pointer-events-none" 
+                    style={{ backgroundColor: blendColor }} 
+                  />
+                )}
               </div>
             </motion.div>
           );
