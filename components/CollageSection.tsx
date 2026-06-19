@@ -81,7 +81,7 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
 
       {/* Description Text */}
       <div className="max-w-[1400px] mx-auto text-center px-6">
-        <p className="text-lg md:text-xl leading-relaxed text-[#292929] font-medium whitespace-pre-wrap">
+        <p className="text-[17pt] text-[#292929] uppercase whitespace-pre-wrap leading-[1.8] tracking-wider font-normal" style={{ fontFamily: 'BebasNeue, Impact, sans-serif', fontWeight: 400 }}>
           {description || fallbackDescription}
         </p>
       </div>

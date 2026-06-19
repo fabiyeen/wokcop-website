@@ -95,7 +95,7 @@ DENGAN VERSATILITY TINGGI, WOKCOP STUDIO MEMBERI LAYANAN FULL PRODUCTION MENCAKU
 
       {/* Description Text */}
       <div className="max-w-[1400px] mx-auto text-center px-6">
-        <p className="text-lg md:text-xl leading-relaxed text-[#3d3c3b] font-medium whitespace-pre-wrap">
+        <p className="text-[17pt] text-[#3d3c3b] uppercase whitespace-pre-wrap leading-[1.8] tracking-wider font-normal" style={{ fontFamily: 'BebasNeue, Impact, sans-serif', fontWeight: 400 }}>
           {description || fallbackDescription}
         </p>
       </div>
