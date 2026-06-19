@@ -1,11 +1,10 @@
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import HeroClient from './HeroClient';
 
 interface HomepageData {
-  heroBgImage1?: SanityImageSource;
-  heroBgImage2?: SanityImageSource;
+  heroBgImage1?: any;
+  heroBgImage2?: any;
 }
 
 /**

@@ -1,12 +1,11 @@
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import Carousel from './Carousel';
 
 interface ProjectData {
   title: string;
   slug?: string;
-  posterImage?: SanityImageSource;
+  posterImage?: any;
 }
 
 interface HomepageData {

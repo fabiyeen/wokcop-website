@@ -1,10 +1,9 @@
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import StudioCollageSection from './StudioCollageSection';
 
 interface HomepageData {
-  aboutStudioGallery?: SanityImageSource[];
+  aboutStudioGallery?: any[];
   aboutStudioDescription?: string;
 }
 

@@ -3,13 +3,11 @@ import { urlFor } from '@/sanity/lib/image';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-
 interface FilmProject {
   title: string;
   director?: string;
-  heroImage?: SanityImageSource;
-  posterImage?: SanityImageSource;
+  heroImage?: any;
+  posterImage?: any;
   premise?: string;
   logline?: string;
   trailerUrl?: string;
