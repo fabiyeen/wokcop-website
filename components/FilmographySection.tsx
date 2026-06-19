@@ -6,6 +6,8 @@ interface ProjectData {
   title: string;
   slug?: string;
   posterImage?: any;
+  homepagePoster?: any;
+  heroImage?: any;
 }
 
 interface HomepageData {

@@ -5,7 +5,6 @@ export default defineType({
   title: 'Homepage',
   type: 'document',
   // Singleton — only one document of this type should exist
-  __experimental_actions: ['update', 'publish'],
   fields: [
     defineField({
       name: 'heroBgImage1',
