@@ -23,10 +23,10 @@ KREATIF LAINNYA. WOKCOP STUDIO TELAH BEKERJASAMA DENGAN BANYAK ESTABLISHED BRAND
 DENGAN VERSATILITY TINGGI, WOKCOP STUDIO MEMBERI LAYANAN FULL PRODUCTION MENCAKUP PRE-, PRO-, DAN POST-PRODUCTION.`;
 
   const imageStyles = [
-    // 0: Top Left (Pure Grayscale)
-    { width: '28%', height: '45%', left: '-2%', top: '5%', rotate: 'rotate-[3deg]', blendColor: null, zIndex: 1 },
-    // 1: Bottom Left (Pure Grayscale)
-    { width: '32%', height: '65%', left: '-4%', top: '38%', rotate: 'rotate-[-4deg]', blendColor: null, zIndex: 2 },
+    // 0: Top Left (Sepia)
+    { width: '28%', height: '45%', left: '-2%', top: '5%', rotate: 'rotate-[3deg]', blendColor: '#9c7d5c', zIndex: 1 },
+    // 1: Bottom Left (Cyan-ish)
+    { width: '32%', height: '65%', left: '-4%', top: '38%', rotate: 'rotate-[-4deg]', blendColor: '#486e7a', zIndex: 2 },
     // 2: Top Mid-Left (Cyan-ish)
     { width: '30%', height: '55%', left: '20%', top: '-5%', rotate: 'rotate-[-2deg]', blendColor: '#486e7a', zIndex: 3 },
     // 3: Bottom Mid-Left (Sepia)
