@@ -72,8 +72,8 @@ export default async function NewsPage() {
       <div className="flex-grow max-w-5xl mx-auto w-full px-6 py-12 md:py-20">
         {/* Page Title */}
         <h1 
-          className="text-4xl md:text-5xl font-bold uppercase text-center mb-20 tracking-wider" 
-          style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+          className="text-4xl md:text-5xl font-normal uppercase text-center mb-20 tracking-widest" 
+          style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}
         >
           NEWS
         </h1>
@@ -85,8 +85,8 @@ export default async function NewsPage() {
               {/* Company Name with underline */}
               <div className="border-b-2 border-wokcop-dark pb-2 mb-4 w-[250px] md:w-[400px]">
                 <h2 
-                  className="text-2xl font-normal uppercase tracking-wider text-wokcop-dark"
-                  style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+                  className="text-2xl font-semibold uppercase tracking-wider text-wokcop-dark"
+                  style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}
                 >
                   {item.company}
                 </h2>
@@ -101,13 +101,13 @@ export default async function NewsPage() {
               >
                 <h3 
                   className="text-xl md:text-2xl font-normal uppercase tracking-wide leading-relaxed max-w-3xl pr-4"
-                  style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+                  style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}
                 >
                   {item.title}
                 </h3>
                 <p 
                   className="text-xl md:text-2xl font-normal uppercase tracking-wider shrink-0"
-                  style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+                  style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}
                 >
                   {item.date}
                 </p>

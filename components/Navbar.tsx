@@ -65,7 +65,7 @@ export default function Navbar({ transparentOnTop = false }: NavbarProps) {
           ) : (
             <span
               className="font-black tracking-[0.18em] text-xl uppercase"
-              style={{ fontFamily: 'BiggerDisplay, Impact, sans-serif' }}
+              style={{ fontFamily: 'BiggerDisplay, Arial, sans-serif' }}
             >
               WOKCOP
             </span>
@@ -84,7 +84,7 @@ export default function Navbar({ transparentOnTop = false }: NavbarProps) {
                 href={href}
                 role="menuitem"
                 className={`text-[13pt] font-normal uppercase hover:opacity-50 transition-all duration-300 whitespace-nowrap ${isTransparent ? 'text-white drop-shadow-md' : 'text-wokcop-dark'}`}
-                style={{ letterSpacing: '0.05em', fontFamily: 'BebasNeue, Impact, sans-serif' }}
+                style={{ letterSpacing: '0.05em', fontFamily: 'BebasNeue, Arial, sans-serif' }}
               >
                 {label}
               </Link>
@@ -106,12 +106,12 @@ export default function Navbar({ transparentOnTop = false }: NavbarProps) {
                   color: '#1A1A1A',
                   letterSpacing: '0.05em',
                   padding: '8px 24px',
-                  fontFamily: 'BebasNeue, Impact, sans-serif',
+                  fontFamily: 'BebasNeue, Arial, sans-serif',
                 }
                 : {
                   letterSpacing: '0.05em',
                   padding: '8px 24px',
-                  fontFamily: 'BebasNeue, Impact, sans-serif',
+                  fontFamily: 'BebasNeue, Arial, sans-serif',
                 }
               }
               aria-label="Contact WOKCOP via email"

@@ -50,7 +50,7 @@ export default function Carousel({ title, items, type }: Props) {
     <div className="w-full max-w-7xl mx-auto py-12 px-4 relative">
       {/* Section Title */}
       <div className="mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-widest text-wokcop-dark border-b-2 border-wokcop-dark inline-block pr-8 pb-1" style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}>
+        <h2 className="text-2xl md:text-3xl font-normal uppercase tracking-widest text-wokcop-dark border-b-2 border-wokcop-dark inline-block pr-8 pb-1" style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}>
           {title}
         </h2>
       </div>

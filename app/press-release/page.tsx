@@ -59,8 +59,8 @@ export default async function PressReleasePage() {
       <div className="flex-grow max-w-5xl mx-auto w-full px-6 py-12 md:py-20">
         {/* Page Title */}
         <h1 
-          className="text-4xl md:text-5xl font-bold uppercase text-center mb-20 tracking-wider" 
-          style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+          className="text-4xl md:text-5xl font-normal uppercase text-center mb-20 tracking-widest" 
+          style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}
         >
           PRESS RELEASE
         </h1>
@@ -72,8 +72,8 @@ export default async function PressReleasePage() {
               {/* Category Title with underline */}
               <div className="border-b-2 border-wokcop-dark pb-2 mb-2 w-[280px] md:w-[450px]">
                 <h2 
-                  className="text-2xl font-normal uppercase tracking-wider text-wokcop-dark"
-                  style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+                  className="text-2xl font-semibold uppercase tracking-wider text-wokcop-dark"
+                  style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}
                 >
                   {item.categoryTitle}
                 </h2>
@@ -89,7 +89,7 @@ export default async function PressReleasePage() {
               >
                 <p 
                   className="text-xl md:text-2xl font-normal uppercase tracking-wide leading-relaxed underline underline-offset-4 decoration-2"
-                  style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+                  style={{ fontFamily: 'BebasNeue, Arial, sans-serif' }}
                 >
                   {item.date} - {item.releaseTitle}
                 </p>
