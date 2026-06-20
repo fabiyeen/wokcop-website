@@ -83,7 +83,7 @@ export default function Navbar({ transparentOnTop = false }: NavbarProps) {
               <Link
                 href={href}
                 role="menuitem"
-                className={`text-[13pt] font-normal uppercase hover:opacity-50 transition-all duration-300 whitespace-nowrap ${isTransparent ? 'text-white drop-shadow-md' : 'text-wokcop-dark'}`}
+                className={`text-[13pt] font-medium uppercase hover:opacity-50 transition-all duration-300 whitespace-nowrap ${isTransparent ? 'text-white drop-shadow-md' : 'text-wokcop-dark'}`}
                 style={{ letterSpacing: '0.05em', fontFamily: 'BebasNeue, Arial, sans-serif' }}
               >
                 {label}
@@ -98,7 +98,7 @@ export default function Navbar({ transparentOnTop = false }: NavbarProps) {
               href="https://mail.google.com/mail/?view=cm&fs=1&to=fabianabubakar1125@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-[11.08pt] font-normal uppercase rounded-full whitespace-nowrap transition-all duration-300 active:scale-95 ${isTransparent ? 'bg-white/20 text-white hover:bg-white hover:text-black backdrop-blur-sm' : 'hover:opacity-80'}`}
+              className={`text-[11.08pt] font-medium uppercase rounded-full whitespace-nowrap transition-all duration-300 active:scale-95 ${isTransparent ? 'bg-white/20 text-white hover:bg-white hover:text-black backdrop-blur-sm' : 'hover:opacity-80'}`}
               style={
                 !isTransparent 
                 ? {
