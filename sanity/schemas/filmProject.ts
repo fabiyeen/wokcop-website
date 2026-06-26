@@ -70,6 +70,12 @@ export default defineType({
       type: 'url',
     }),
     defineField({
+      name: 'hoverGif',
+      title: 'Hover Preview (GIF/Image)',
+      description: 'An image or GIF to show when hovering over this project in the carousel',
+      type: 'image',
+    }),
+    defineField({
       name: 'synopsis',
       title: 'Synopsis',
       description: 'Full synopsis of the film',

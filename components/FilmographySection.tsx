@@ -8,6 +8,7 @@ interface ProjectData {
   posterImage?: any;
   homepagePoster?: any;
   heroImage?: any;
+  hoverGif?: any;
 }
 
 interface HomepageData {
@@ -19,13 +20,14 @@ export default async function FilmographySection() {
 
   try {
     data = await client.fetch<HomepageData>(
-      `*[_type == "homepage" && _id == "homepage"][0]{ 
+      `*[_type == "homepage"] | order(_updatedAt desc)[0]{ 
         filmProjects[]->{
           title,
           "slug": slug.current,
           posterImage,
           heroImage,
-          homepagePoster
+          homepagePoster,
+          hoverGif
         } 
       }`,
       {},
@@ -44,6 +46,7 @@ export default async function FilmographySection() {
           : (item.posterImage?.asset?._ref 
             ? urlFor(item.posterImage).width(800).url() 
             : (item.heroImage?.asset?._ref ? urlFor(item.heroImage).width(800).url() : '/LOGO WOKCOP.png')),
+        hoverGifUrl: item.hoverGif?.asset?._ref ? urlFor(item.hoverGif).url() : undefined,
       }))
     : [];
 

@@ -12,7 +12,9 @@ export default async function AboutStudio() {
 
   try {
     data = await client.fetch<HomepageData>(
-      `*[_type == "homepage" && _id == "homepage"][0]{ aboutStudioGallery, aboutStudioDescription }`,
+      `*[_type == "homepage"] | order(_updatedAt desc)[0]{ aboutStudioGallery, aboutStudioDescription }`,
+      {},
+      { cache: 'no-store' }
     );
   } catch (err) {
     console.warn('[AboutStudio] Sanity fetch failed:', err);

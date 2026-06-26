@@ -15,11 +15,7 @@ export default function CollageSection({ galleryUrls, description }: Props) {
   }
   const finalImages = images.slice(0, 7);
 
-  const fallbackDescription = `WOKCOP PICTURES MERUPAKAN RUMAH PRODUKSI YANG BERGERAK PADA BIDANG PERFILMAN. WOKCOP PICTURES DIDIRIKAN OLEH
-FRANKLIN DARMADI DAN ALFIE LIM SEJAK 2020 DAN TELAH MENGHASILKAN KARYA-KARYA YANG PATUT DIBANGGAKAN. KAMI PERCAYA
-BAHWA INTEGRASI ANTARA IDE CEMERLANG DENGAN AUDIO-VISUAL YANG BAIK, AKAN MENGHASILKAN MANFAAT YANG BESAR.
-
-WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYISIPKAN MAKNA.`;
+  const fallbackDescription = `Wokcop Pictures merupakan rumah produksi yang bergerak pada bidang perfilman. Wokcop Pictures didirikan oleh Franklin Darmadi dan Alfie Lim sejak 2020 dan telah menghasilkan karya-karya yang patut dibanggakan. Kami percaya bahwa intergrasi antara ide cemerlang dengan audio-visual yang baik, akan menghasilkan manfaat yang besar.\n\nWokcop Pictures tidak hanya merekam gambar tetapi menghidupkan cerita dan menyisipkan makna.`;
 
   return (
     <section id="about-pictures" className="py-24 flex flex-col items-center">
@@ -71,12 +67,12 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
                   src={src}
                   alt={`Gallery image ${i + 1}`}
                   fill
-                  className="object-cover grayscale contrast-125 brightness-[0.60]"
+                  className="object-cover grayscale contrast-125 brightness-110"
                   sizes="(max-width: 1200px) 100vw, 320px"
                 />
                 {blendColor && (
                   <div 
-                    className="absolute inset-0 mix-blend-color opacity-70 pointer-events-none" 
+                    className="absolute inset-0 mix-blend-color opacity-60 pointer-events-none" 
                     style={{ backgroundColor: blendColor }} 
                   />
                 )}
@@ -88,8 +84,7 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
         {/* 4. Typography Placement */}
         <div className="z-40 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full text-center">
           <h2 
-            className="font-normal tracking-[0.05em] text-white text-[70.86pt] uppercase drop-shadow-2xl"
-            style={{ fontFamily: 'BebasNeue, Impact, sans-serif' }}
+            className="font-bebas font-normal tracking-[10px] text-white text-[115pt] uppercase drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
           >
             WOKCOP PICTURES
           </h2>
@@ -97,8 +92,8 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
       </div>
 
       {/* Description Text */}
-      <div className="max-w-[1400px] mx-auto text-center px-6">
-        <p className="text-lg md:text-xl text-[#292929] uppercase whitespace-pre-wrap leading-relaxed tracking-wide font-normal" style={{ fontFamily: 'BebasNeue, Arial, sans-serif', fontWeight: 400 }}>
+      <div className="max-w-[1400px] mx-auto text-center px-30">
+        <p className="text-lg md:text-xl text-[#292929] uppercase whitespace-pre-wrap leading-relaxed tracking-wide font-bebas font-normal">
           {description || fallbackDescription}
         </p>
       </div>

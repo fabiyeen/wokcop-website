@@ -98,9 +98,8 @@ export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps
         >
           {/* "Welcome to" — Abuget script font */}
           <motion.span
-            className="text-[clamp(32px,4vw,60px)] text-white leading-none z-10 -mb-1 md:-mb-5 drop-shadow-md"
+            className="font-abuget text-[clamp(32px,4vw,60px)] text-white leading-none z-20 -mb-8 drop-shadow-md"
             style={{
-              fontFamily: 'Abuget, "Brush Script MT", cursive',
               fontWeight: 400,
             }}
             initial={{ opacity: 0, y: 12 }}
@@ -112,9 +111,8 @@ export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps
 
           {/* "WOKCOP" — BiggerDisplay font */}
           <motion.h1
-            className="text-[clamp(80px,12vw,200px)] text-white leading-none uppercase drop-shadow-xl"
+            className="font-bigger text-[clamp(80px,12vw,200px)] text-white leading-none uppercase drop-shadow-xl"
             style={{
-              fontFamily: 'BiggerDisplay, Impact, "Arial Narrow Bold", sans-serif',
               fontWeight: 900,
               letterSpacing: '-0.01em',
               transform: 'scaleY(1.1)',
@@ -128,9 +126,8 @@ export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps
 
           {/* "OFFICIAL SITE" — BiggerDisplay font */}
           <motion.span
-            className="text-[clamp(14px,1.5vw,24px)] tracking-[0.46em] text-white/80 uppercase -mt-2 md:-mt-4 drop-shadow-md"
+            className="font-bigger text-[clamp(14px,1.5vw,24px)] tracking-[0.4em] text-white/80 uppercase -mt-2 md:-mt-4 drop-shadow-md"
             style={{
-              fontFamily: 'BiggerDisplay, Impact, "Arial Narrow Bold", sans-serif',
               fontWeight: 600,
             }}
             initial={{ opacity: 0 }}

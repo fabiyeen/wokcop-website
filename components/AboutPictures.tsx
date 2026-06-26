@@ -12,7 +12,9 @@ export default async function AboutPictures() {
 
   try {
     data = await client.fetch<HomepageData>(
-      `*[_type == "homepage" && _id == "homepage"][0]{ aboutPicturesGallery, aboutPicturesDescription }`,
+      `*[_type == "homepage"] | order(_updatedAt desc)[0]{ aboutPicturesGallery, aboutPicturesDescription }`,
+      {},
+      { cache: 'no-store' }
     );
   } catch (err) {
     console.warn('[AboutPictures] Sanity fetch failed:', err);

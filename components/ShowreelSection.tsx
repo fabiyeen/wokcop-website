@@ -5,7 +5,7 @@ import Carousel from './Carousel';
 interface ProjectData {
   title: string;
   image: any;
-  videoUrl?: string;
+  hoverGif?: any;
 }
 
 interface HomepageData {
@@ -17,7 +17,7 @@ export default async function ShowreelSection() {
 
   try {
     data = await client.fetch<HomepageData>(
-      `*[_type == "homepage" && _id == "homepage"][0]{ commercial }`,
+      `*[_type == "homepage"] | order(_updatedAt desc)[0]{ commercial }`,
       {},
       { cache: 'no-store' }
     );
@@ -29,7 +29,7 @@ export default async function ShowreelSection() {
     ? data.commercial.map((item: any) => ({
         title: item.title,
         image: item.image?.asset?._ref ? urlFor(item.image).width(800).url() : '/LOGO WOKCOP.png',
-        videoUrl: item.videoUrl,
+        hoverGifUrl: item.hoverGif?.asset?._ref ? urlFor(item.hoverGif).url() : undefined,
       }))
     : [];
 

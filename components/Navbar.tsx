@@ -50,7 +50,17 @@ export default function Navbar({ transparentOnTop = false }: NavbarProps) {
     >
       <div className="flex items-center" style={{ gap: '40px' }}>
         {/* Logo — immediately to the left of the links */}
-        <Link href="/" className="shrink-0 flex items-center" aria-label="WOKCOP — Home">
+        <Link 
+          href="/" 
+          className="shrink-0 flex items-center cursor-pointer" 
+          aria-label="WOKCOP — Home"
+          onClick={(e) => {
+            if (typeof window !== 'undefined' && window.location.pathname === '/') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+        >
           {!logoError ? (
             <span className="relative block transition-all duration-300" style={{ width: '64px', height: '64px', filter: isTransparent ? 'invert(1) brightness(2)' : 'none' }}>
               <Image
