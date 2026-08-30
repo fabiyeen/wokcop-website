@@ -21,7 +21,7 @@ export default async function AboutPictures() {
   }
 
   const galleryUrls = data?.aboutPicturesGallery
-    ? data.aboutPicturesGallery.map((img) => urlFor(img).width(600).url())
+    ? data.aboutPicturesGallery.map((img) => urlFor(img).width(1600).quality(95).auto('format').url())
     : [];
 
   return (

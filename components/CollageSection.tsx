@@ -68,7 +68,8 @@ export default function CollageSection({ galleryUrls, description }: Props) {
                   alt={`Gallery image ${i + 1}`}
                   fill
                   className="object-cover grayscale contrast-125 brightness-110"
-                  sizes="(max-width: 1200px) 100vw, 320px"
+                  sizes="(max-width: 1200px) 100vw, 500px"
+                  unoptimized
                 />
                 {blendColor && (
                   <div 

@@ -67,7 +67,8 @@ export default function StudioCollageSection({ galleryUrls, description }: Props
                     alt={`Gallery image ${i + 1}`}
                     fill
                     className="object-cover object-[center_top] grayscale contrast-125 brightness-110"
-                    sizes="(max-width: 768px) 100vw, 256px"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    unoptimized
                   />
                   {style.blendColor && (
                     <div

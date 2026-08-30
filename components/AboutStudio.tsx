@@ -21,7 +21,7 @@ export default async function AboutStudio() {
   }
 
   const galleryUrls = data?.aboutStudioGallery
-    ? data.aboutStudioGallery.map((img) => urlFor(img).width(600).url())
+    ? data.aboutStudioGallery.map((img) => urlFor(img).width(1600).quality(95).auto('format').url())
     : [];
 
   return (

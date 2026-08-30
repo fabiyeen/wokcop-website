@@ -105,7 +105,7 @@ export default function Navbar({ transparentOnTop = false }: NavbarProps) {
           <li role="none">
             <a
               id="navbar-contact-btn"
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=fabianabubakar1125@gmail.com"
+              href="mailto:wokcopmovie@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
               className={`text-[11.08pt] font-bold uppercase rounded-full whitespace-nowrap transition-all duration-300 active:scale-95 ${isTransparent ? 'bg-white/20 text-white hover:bg-white hover:text-black backdrop-blur-sm' : 'hover:opacity-80'}`}

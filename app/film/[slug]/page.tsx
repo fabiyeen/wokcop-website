@@ -59,12 +59,12 @@ export default async function FilmDetailPage({ params }: { params: Promise<{ slu
   }
 
   const posterImageUrl = film?.posterImage?.asset?._ref 
-    ? urlFor(film.posterImage).width(600).url() 
-    : (film?.heroImage?.asset?._ref ? urlFor(film.heroImage).width(600).url() : null);
+    ? urlFor(film.posterImage).width(1200).quality(95).auto('format').url() 
+    : (film?.heroImage?.asset?._ref ? urlFor(film.heroImage).width(1200).quality(95).auto('format').url() : null);
     
   const heroImageUrl = film?.heroImage?.asset?._ref 
-    ? urlFor(film.heroImage).width(1920).url() 
-    : (film?.posterImage?.asset?._ref ? urlFor(film.posterImage).width(1920).url() : null);
+    ? urlFor(film.heroImage).width(2000).quality(95).auto('format').url() 
+    : (film?.posterImage?.asset?._ref ? urlFor(film.posterImage).width(2000).quality(95).auto('format').url() : null);
 
   console.log('[Sanity Debug]', {
     title: film?.title,
@@ -104,19 +104,19 @@ export default async function FilmDetailPage({ params }: { params: Promise<{ slu
       <div className="relative z-10 max-w-5xl mx-auto px-6 pb-24 flex flex-col md:flex-row gap-12 md:gap-16 -mt-8 md:-mt-12">
         
         {/* Left Column: Poster */}
-        <div className="shrink-0 w-full max-w-[300px] mx-auto md:mx-0 aspect-[2/3] bg-[#222] rounded flex items-center justify-center relative overflow-hidden shadow-2xl">
+        <div className="shrink-0 w-full max-w-[300px] mx-auto md:mx-0 self-start">
           {posterImageUrl ? (
-            <Image 
+            <img 
               src={posterImageUrl} 
               alt={`${film.title} Poster`} 
-              fill 
-              className="object-cover md:object-contain rounded-xl shadow-2xl"
-              unoptimized
+              className="w-full h-auto rounded-xl shadow-2xl block"
             />
           ) : (
-            <p className="text-white/80 font-bold tracking-widest text-lg">
-              [POSTER]
-            </p>
+            <div className="w-full aspect-[2/3] bg-[#222] rounded-xl flex items-center justify-center shadow-2xl">
+              <p className="text-white/80 font-bold tracking-widest text-lg">
+                [POSTER]
+              </p>
+            </div>
           )}
         </div>
 
