@@ -85,7 +85,7 @@ function CarouselCard({
 
   const cardInner = (
     <div 
-      className="relative w-full h-full"
+      className="relative w-full h-full aspect-video"
       onClick={() => {
         if (isCenter && type === 'commercial' && (item.videoUrl || item.slug)) {
           onSelectCommercial(item.videoUrl || item.slug || '');
@@ -96,7 +96,7 @@ function CarouselCard({
         src={item.image}
         alt={item.title || "Project image"}
         fill
-        className={`object-cover z-0 transition-opacity duration-300 ${isCenter && isHovered && item.hoverGifUrl ? 'opacity-0' : 'opacity-100'}`}
+        className={`object-cover object-center z-0 transition-opacity duration-300 ${isCenter && isHovered && item.hoverGifUrl ? 'opacity-0' : 'opacity-100'}`}
         sizes="(max-width: 768px) 300px, 450px"
         loading="lazy"
         unoptimized
@@ -117,7 +117,7 @@ function CarouselCard({
               src={item.hoverGifUrl}
               alt={`${item.title || "Project"} hover preview`}
               fill
-              className="object-cover"
+              className="object-cover object-center"
               unoptimized
             />
           </motion.div>
@@ -136,7 +136,7 @@ function CarouselCard({
 
   return (
     <motion.div
-      className={`absolute w-[300px] md:w-[450px] h-[220px] md:h-[320px] rounded-xl overflow-hidden shadow-xl transform-gpu ${isCenter ? 'group cursor-pointer' : ''}`}
+      className={`absolute w-[300px] md:w-[450px] aspect-video rounded-xl overflow-hidden shadow-xl transform-gpu ${isCenter ? 'group cursor-pointer' : ''}`}
       initial={false}
       animate={{ x, opacity, zIndex, y: 0, scale: 1 }}
       whileHover={isCenter ? { scale: hoverScale, y: hoverY } : {}}
@@ -147,7 +147,7 @@ function CarouselCard({
       {isCenter && type === 'film' ? (
         <Link 
           href={`/film/${item.slug || encodeURIComponent(item.title.toLowerCase().replace(/\s+/g, '-'))}`} 
-          className="block w-full h-full relative"
+          className="block w-full h-full relative aspect-video"
         >
           {cardInner}
         </Link>

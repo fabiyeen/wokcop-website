@@ -39,6 +39,11 @@ export const metadata: Metadata = {
     'commercial',
     'filmography',
   ],
+  icons: {
+    icon: '/LOGO WOKCOP.png',
+    shortcut: '/LOGO WOKCOP.png',
+    apple: '/LOGO WOKCOP.png',
+  },
   openGraph: {
     title: 'WOKCOP — Official Site',
     description:
@@ -54,6 +59,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${abuget.variable} ${biggerDisplay.variable} ${bebasNeue.variable} antialiased`}>
+      <head>
+        <link rel="icon" href="/LOGO WOKCOP.png" />
+      </head>
       <body className="min-h-screen flex flex-col overflow-x-hidden">{children}</body>
     </html>
   );
