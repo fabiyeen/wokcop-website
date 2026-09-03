@@ -71,9 +71,12 @@ export default defineType({
     }),
     defineField({
       name: 'hoverGif',
-      title: 'Hover Preview (GIF/Image)',
-      description: 'An image or GIF to show when hovering over this project in the carousel',
-      type: 'image',
+      title: 'Hover Preview (Video MP4/WebM or GIF)',
+      description: 'A video (MP4/WebM) or animated GIF/image to show when hovering over this project in the carousel',
+      type: 'file',
+      options: {
+        accept: 'video/mp4,video/webm,image/gif,image/*',
+      },
     }),
     defineField({
       name: 'synopsis',

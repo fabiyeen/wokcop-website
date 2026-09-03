@@ -9,6 +9,7 @@ interface ProjectData {
   homepagePoster?: any;
   heroImage?: any;
   hoverGif?: any;
+  hoverMediaUrl?: string;
 }
 
 interface HomepageData {
@@ -27,6 +28,7 @@ export default async function FilmographySection() {
           posterImage,
           heroImage,
           homepagePoster,
+          "hoverMediaUrl": hoverGif.asset->url,
           hoverGif
         } 
       }`,
@@ -46,7 +48,7 @@ export default async function FilmographySection() {
           : (item.posterImage?.asset?._ref 
             ? urlFor(item.posterImage).width(1200).quality(80).auto('format').url() 
             : (item.heroImage?.asset?._ref ? urlFor(item.heroImage).width(1200).quality(80).auto('format').url() : '/LOGO WOKCOP.png')),
-        hoverGifUrl: item.hoverGif?.asset?._ref ? urlFor(item.hoverGif).url() : undefined,
+        hoverMediaUrl: item.hoverMediaUrl || (item.hoverGif?.asset?._ref ? urlFor(item.hoverGif).url() : undefined),
       }))
     : [];
 

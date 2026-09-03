@@ -78,7 +78,15 @@ export default defineType({
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
             defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
-            defineField({ name: 'hoverGif', title: 'Hover Preview (GIF/Image)', type: 'image', options: { hotspot: true } }),
+            defineField({
+              name: 'hoverGif',
+              title: 'Hover Preview (Video MP4/WebM or GIF)',
+              description: 'A video (MP4/WebM) or animated GIF/image to show when hovering over this project in the carousel',
+              type: 'file',
+              options: {
+                accept: 'video/mp4,video/webm,image/gif,image/*',
+              },
+            }),
           ],
         },
       ],
