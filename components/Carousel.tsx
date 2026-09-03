@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,6 +11,13 @@ interface CarouselItem {
   slug?: string;
   videoUrl?: string;
   hoverGifUrl?: string;
+  hoverMediaUrl?: string;
+}
+
+function isVideoUrl(url?: string): boolean {
+  if (!url) return false;
+  const cleanUrl = url.split('?')[0].toLowerCase();
+  return cleanUrl.endsWith('.mp4') || cleanUrl.endsWith('.webm') || url.toLowerCase().includes('.mp4') || url.toLowerCase().includes('.webm');
 }
 
 function getYouTubeEmbedUrl(url: string) {
@@ -44,6 +51,7 @@ function CarouselCard({
   onSelectCommercial,
 }: CardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   let offset = (index - activeIndex) % totalItems;
   if (offset > Math.floor(totalItems / 2)) {
@@ -55,6 +63,45 @@ function CarouselCard({
   const isCenter = offset === 0;
   const isLeft = offset === -1;
   const isRight = offset === 1;
+
+  // Cleanup timeout & reset hover if card is no longer centered
+  useEffect(() => {
+    if (!isCenter) {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+      setIsHovered(false);
+    }
+  }, [isCenter]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    if (!isCenter) return;
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsHovered(true);
+    }, 150);
+  }, [isCenter]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    setIsHovered(false);
+  }, []);
 
   let x = '0%';
   let opacity = 1;
@@ -83,6 +130,9 @@ function CarouselCard({
   const hoverScale = 1.05;
   const hoverY = type === 'film' ? 16 : -16;
 
+  const hoverMedia = item.hoverMediaUrl || item.hoverGifUrl;
+  const isVideo = isVideoUrl(hoverMedia);
+
   const cardInner = (
     <div 
       className="relative w-full h-full aspect-video"
@@ -96,30 +146,42 @@ function CarouselCard({
         src={item.image}
         alt={item.title || "Project image"}
         fill
-        className={`object-cover object-center z-0 transition-opacity duration-300 ${isCenter && isHovered && item.hoverGifUrl ? 'opacity-0' : 'opacity-100'}`}
+        className={`object-cover object-center z-0 transition-opacity duration-300 ${isCenter && isHovered && hoverMedia ? 'opacity-0' : 'opacity-100'}`}
         sizes="(max-width: 768px) 300px, 450px"
         loading="lazy"
         unoptimized
       />
 
-      {/* Conditionally mount hover GIF strictly on active card hover */}
+      {/* Conditionally mount hover preview (video or gif) strictly on debounced card hover */}
       <AnimatePresence>
-        {isCenter && isHovered && item.hoverGifUrl && (
+        {isCenter && isHovered && hoverMedia && (
           <motion.div
-            key="hover-gif"
+            key="hover-media"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 z-10 w-full h-full pointer-events-none"
+            className="absolute inset-0 z-10 w-full h-full pointer-events-none overflow-hidden"
           >
-            <Image
-              src={item.hoverGifUrl}
-              alt={`${item.title || "Project"} hover preview`}
-              fill
-              className="object-cover object-center"
-              unoptimized
-            />
+            {isVideo ? (
+              <video
+                src={hoverMedia}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="none"
+                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+              />
+            ) : (
+              <Image
+                src={hoverMedia}
+                alt={`${item.title || "Project"} hover preview`}
+                fill
+                className="object-cover object-center"
+                unoptimized
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -141,8 +203,8 @@ function CarouselCard({
       animate={{ x, opacity, zIndex, y: 0, scale: 1 }}
       whileHover={isCenter ? { scale: hoverScale, y: hoverY } : {}}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      onMouseEnter={() => isCenter && setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isCenter && type === 'film' ? (
         <Link 
