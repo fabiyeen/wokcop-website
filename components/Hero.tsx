@@ -25,11 +25,11 @@ export default async function Hero() {
   }
 
   const bgImage1Url = data?.heroBgImage1
-    ? urlFor(data.heroBgImage1).width(2000).quality(85).url()
+    ? urlFor(data.heroBgImage1).width(2000).quality(80).auto('format').url()
     : undefined;
 
   const bgImage2Url = data?.heroBgImage2
-    ? urlFor(data.heroBgImage2).width(2000).quality(85).url()
+    ? urlFor(data.heroBgImage2).width(2000).quality(80).auto('format').url()
     : undefined;
 
   return <HeroClient bgImage1Url={bgImage1Url} bgImage2Url={bgImage2Url} />;

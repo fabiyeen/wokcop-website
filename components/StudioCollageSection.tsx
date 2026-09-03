@@ -50,7 +50,7 @@ export default function StudioCollageSection({ galleryUrls, description }: Props
             return (
               <motion.div
                 key={i}
-                className={`absolute shadow-xl drop-shadow-2xl ${style.rotate}`}
+                className={`absolute shadow-xl drop-shadow-2xl transform-gpu ${style.rotate}`}
                 style={{
                   left: style.left,
                   top: style.top,
@@ -67,7 +67,8 @@ export default function StudioCollageSection({ galleryUrls, description }: Props
                     alt={`Gallery image ${i + 1}`}
                     fill
                     className="object-cover object-[center_top] grayscale contrast-125 brightness-110"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading="lazy"
                     unoptimized
                   />
                   {style.blendColor && (

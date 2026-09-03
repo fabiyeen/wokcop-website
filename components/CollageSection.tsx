@@ -51,7 +51,7 @@ export default function CollageSection({ galleryUrls, description }: Props) {
           return (
             <motion.div
               key={i}
-              className={`absolute shadow-xl drop-shadow-2xl ${rotations[i]}`}
+              className={`absolute shadow-xl drop-shadow-2xl transform-gpu ${rotations[i]}`}
               style={{
                 left: leftCalc,
                 top: '50%',
@@ -68,7 +68,8 @@ export default function CollageSection({ galleryUrls, description }: Props) {
                   alt={`Gallery image ${i + 1}`}
                   fill
                   className="object-cover grayscale contrast-125 brightness-110"
-                  sizes="(max-width: 1200px) 100vw, 500px"
+                  sizes="(max-width: 768px) 100vw, 320px"
+                  loading="lazy"
                   unoptimized
                 />
                 {blendColor && (

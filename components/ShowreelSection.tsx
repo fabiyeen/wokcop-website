@@ -28,7 +28,7 @@ export default async function ShowreelSection() {
     const items = data?.commercial
     ? data.commercial.map((item: any) => ({
         title: item.title,
-        image: item.image?.asset?._ref ? urlFor(item.image).width(800).url() : '/LOGO WOKCOP.png',
+        image: item.image?.asset?._ref ? urlFor(item.image).width(1200).quality(80).auto('format').url() : '/LOGO WOKCOP.png',
         hoverGifUrl: item.hoverGif?.asset?._ref ? urlFor(item.hoverGif).url() : undefined,
       }))
     : [];

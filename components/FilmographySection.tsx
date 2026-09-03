@@ -42,10 +42,10 @@ export default async function FilmographySection() {
         title: item.title,
         slug: item.slug,
         image: item.homepagePoster?.asset?._ref
-          ? urlFor(item.homepagePoster).width(800).url()
+          ? urlFor(item.homepagePoster).width(1200).quality(80).auto('format').url()
           : (item.posterImage?.asset?._ref 
-            ? urlFor(item.posterImage).width(800).url() 
-            : (item.heroImage?.asset?._ref ? urlFor(item.heroImage).width(800).url() : '/LOGO WOKCOP.png')),
+            ? urlFor(item.posterImage).width(1200).quality(80).auto('format').url() 
+            : (item.heroImage?.asset?._ref ? urlFor(item.heroImage).width(1200).quality(80).auto('format').url() : '/LOGO WOKCOP.png')),
         hoverGifUrl: item.hoverGif?.asset?._ref ? urlFor(item.hoverGif).url() : undefined,
       }))
     : [];

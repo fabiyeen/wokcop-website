@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -26,23 +26,167 @@ interface Props {
   type: 'film' | 'commercial';
 }
 
+interface CardProps {
+  item: CarouselItem;
+  index: number;
+  activeIndex: number;
+  totalItems: number;
+  type: 'film' | 'commercial';
+  onSelectCommercial: (url: string) => void;
+}
+
+function CarouselCard({
+  item,
+  index,
+  activeIndex,
+  totalItems,
+  type,
+  onSelectCommercial,
+}: CardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  let offset = (index - activeIndex) % totalItems;
+  if (offset > Math.floor(totalItems / 2)) {
+    offset -= totalItems;
+  } else if (offset < -Math.floor(totalItems / 2)) {
+    offset += totalItems;
+  }
+
+  const isCenter = offset === 0;
+  const isLeft = offset === -1;
+  const isRight = offset === 1;
+
+  let x = '0%';
+  let opacity = 1;
+  let zIndex = 0;
+
+  if (isCenter) {
+    x = '0%';
+    zIndex = 10;
+    opacity = 1;
+  } else if (isLeft) {
+    x = '-105%';
+    zIndex = 5;
+    opacity = 0.4;
+  } else if (isRight) {
+    x = '105%';
+    zIndex = 5;
+    opacity = 0.4;
+  } else if (offset < 0) {
+    x = '-210%';
+    opacity = 0;
+  } else {
+    x = '210%';
+    opacity = 0;
+  }
+
+  const hoverScale = 1.05;
+  const hoverY = type === 'film' ? 16 : -16;
+
+  const cardInner = (
+    <div 
+      className="relative w-full h-full"
+      onClick={() => {
+        if (isCenter && type === 'commercial' && (item.videoUrl || item.slug)) {
+          onSelectCommercial(item.videoUrl || item.slug || '');
+        }
+      }}
+    >
+      <Image
+        src={item.image}
+        alt={item.title || "Project image"}
+        fill
+        className={`object-cover z-0 transition-opacity duration-300 ${isCenter && isHovered && item.hoverGifUrl ? 'opacity-0' : 'opacity-100'}`}
+        sizes="(max-width: 768px) 300px, 450px"
+        loading="lazy"
+        unoptimized
+      />
+
+      {/* Conditionally mount hover GIF strictly on active card hover */}
+      <AnimatePresence>
+        {isCenter && isHovered && item.hoverGifUrl && (
+          <motion.div
+            key="hover-gif"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 z-10 w-full h-full pointer-events-none"
+          >
+            <Image
+              src={item.hoverGifUrl}
+              alt={`${item.title || "Project"} hover preview`}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {isCenter && (
+        <div className="absolute z-30 bottom-0 w-full bg-black/80 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out flex items-center justify-center">
+          <h3 className="text-white text-lg font-bebas font-bold uppercase tracking-wider text-center drop-shadow-md">
+            {item.title || "Untitled Project"}
+          </h3>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <motion.div
+      className={`absolute w-[300px] md:w-[450px] h-[220px] md:h-[320px] rounded-xl overflow-hidden shadow-xl transform-gpu ${isCenter ? 'group cursor-pointer' : ''}`}
+      initial={false}
+      animate={{ x, opacity, zIndex, y: 0, scale: 1 }}
+      whileHover={isCenter ? { scale: hoverScale, y: hoverY } : {}}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+      onMouseEnter={() => isCenter && setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {isCenter && type === 'film' ? (
+        <Link 
+          href={`/film/${item.slug || encodeURIComponent(item.title.toLowerCase().replace(/\s+/g, '-'))}`} 
+          className="block w-full h-full relative"
+        >
+          {cardInner}
+        </Link>
+      ) : (
+        cardInner
+      )}
+    </motion.div>
+  );
+}
+
 export default function Carousel({ title, items, type }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
 
-  const safeItems = items && items.length > 0 ? items : [
-    { image: '/LOGO%20WOKCOP.png', title: 'Example Project 1' },
-    { image: '/LOGO%20WOKCOP.png', title: 'Example Project 2' },
-    { image: '/LOGO%20WOKCOP.png', title: 'Example Project 3' },
-  ];
+  const displayItems = useMemo(() => {
+    const safeItems = items && items.length > 0 ? items : [
+      { image: '/LOGO%20WOKCOP.png', title: 'Example Project 1' },
+      { image: '/LOGO%20WOKCOP.png', title: 'Example Project 2' },
+      { image: '/LOGO%20WOKCOP.png', title: 'Example Project 3' },
+    ];
 
-  let displayItems = [...safeItems];
-  while (displayItems.length < 5) {
-    displayItems = [...displayItems, ...safeItems];
-  }
+    let list = [...safeItems];
+    while (list.length < 5) {
+      list = [...list, ...safeItems];
+    }
+    return list;
+  }, [items]);
 
-  const next = () => setActiveIndex((prev) => (prev + 1) % displayItems.length);
-  const prev = () => setActiveIndex((prev) => (prev - 1 + displayItems.length) % displayItems.length);
+  const next = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % displayItems.length);
+  }, [displayItems.length]);
+
+  const prev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + displayItems.length) % displayItems.length);
+  }, [displayItems.length]);
+
+  const handleSelectCommercial = useCallback((url: string) => {
+    setLightboxUrl(url);
+  }, []);
 
   return (
     <div className="w-full max-w-7xl mx-auto py-12 px-4 relative">
@@ -57,119 +201,17 @@ export default function Carousel({ title, items, type }: Props) {
       <div className="relative w-full h-[320px] md:h-[400px] flex items-center justify-center overflow-hidden">
         <div className="relative w-full max-w-[1000px] h-full flex items-center justify-center">
           <AnimatePresence mode="popLayout">
-            {displayItems.map((item, index) => {
-              let offset = (index - activeIndex) % displayItems.length;
-              if (offset > Math.floor(displayItems.length / 2)) {
-                offset -= displayItems.length;
-              } else if (offset < -Math.floor(displayItems.length / 2)) {
-                offset += displayItems.length;
-              }
-
-              const isCenter = offset === 0;
-              const isLeft = offset === -1;
-              const isRight = offset === 1;
-
-              let x = '0%';
-              let opacity = 1;
-              let zIndex = 0;
-              
-              if (isCenter) {
-                x = '0%';
-                zIndex = 10;
-                opacity = 1;
-              } else if (isLeft) {
-                x = '-105%';
-                zIndex = 5;
-                opacity = 0.4;
-              } else if (isRight) {
-                x = '105%';
-                zIndex = 5;
-                opacity = 0.4;
-              } else if (offset < 0) {
-                x = '-210%';
-                opacity = 0;
-              } else {
-                x = '210%';
-                opacity = 0;
-              }
-
-              const hoverScale = 1.05;
-              const hoverY = type === 'film' ? 16 : -16;
-
-              return (
-                <motion.div
-                  key={index}
-                  className={`absolute w-[300px] md:w-[450px] h-[220px] md:h-[320px] rounded-xl overflow-hidden shadow-xl ${isCenter ? 'group cursor-pointer' : ''}`}
-                  initial={false}
-                  animate={{ x, opacity, zIndex, y: 0, scale: 1 }}
-                  whileHover={isCenter ? { scale: hoverScale, y: hoverY } : {}}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                >
-                  <div 
-                    className="relative w-full h-full"
-                    onClick={() => {
-                      if (isCenter && type === 'commercial' && (item.videoUrl || item.slug)) {
-                        setLightboxUrl(item.videoUrl || item.slug || '');
-                      }
-                    }}
-                  >
-                    {isCenter && type === 'film' ? (
-                      <Link href={`/film/${item.slug || encodeURIComponent(item.title.toLowerCase().replace(/\s+/g, '-'))}`} className="block w-full h-full relative">
-                        <Image
-                          src={item.image}
-                          alt={item.title || "Project image"}
-                          fill
-                          className={`object-cover z-0 transition-opacity duration-300 ${item.hoverGifUrl ? 'group-hover:opacity-0' : ''}`}
-                          sizes="(max-width: 768px) 300px, 450px"
-                          unoptimized
-                        />
-                        {item.hoverGifUrl && (
-                          <Image
-                            src={item.hoverGifUrl}
-                            alt={`${item.title || "Project"} hover preview`}
-                            fill
-                            className="object-cover absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                            unoptimized
-                          />
-                        )}
-                        <div className="absolute z-30 bottom-0 w-full bg-black/80 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out flex items-center justify-center">
-                          <h3 className="text-white text-lg font-bebas font-bold uppercase tracking-wider text-center drop-shadow-md">
-                            {item.title || "Untitled Project"}
-                          </h3>
-                        </div>
-                      </Link>
-                    ) : (
-                      <>
-                        <Image
-                          src={item.image}
-                          alt={item.title || "Project image"}
-                          fill
-                          className={`object-cover z-0 transition-opacity duration-300 ${isCenter && item.hoverGifUrl ? 'group-hover:opacity-0' : ''}`}
-                          sizes="(max-width: 768px) 300px, 450px"
-                          unoptimized
-                        />
-                        {isCenter && item.hoverGifUrl && (
-                          <Image
-                            src={item.hoverGifUrl}
-                            alt={`${item.title || "Project"} hover preview`}
-                            fill
-                            className="object-cover absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                            unoptimized
-                          />
-                        )}
-                        {isCenter && (
-                          <div className="absolute z-30 bottom-0 w-full bg-black/80 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out flex items-center justify-center">
-                            <h3 className="text-white text-lg font-bebas font-bold uppercase tracking-wider text-center drop-shadow-md">
-                              {item.title || "Untitled Project"}
-                            </h3>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </motion.div>
-              );
-            })}
+            {displayItems.map((item, index) => (
+              <CarouselCard
+                key={`${item.title}-${index}`}
+                item={item}
+                index={index}
+                activeIndex={activeIndex}
+                totalItems={displayItems.length}
+                type={type}
+                onSelectCommercial={handleSelectCommercial}
+              />
+            ))}
           </AnimatePresence>
         </div>
 

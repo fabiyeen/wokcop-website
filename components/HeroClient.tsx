@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface HeroClientProps {
@@ -16,22 +16,44 @@ const FALLBACK_BG_2 =
 export default function HeroClient({ bgImage1Url, bgImage2Url }: HeroClientProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
 
   const bg1 = bgImage1Url || FALLBACK_BG_1;
   const bg2 = bgImage2Url || FALLBACK_BG_2;
 
-  /* Parallax mouse tracking */
+  /* Parallax mouse tracking - throttled with requestAnimationFrame */
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
     if (!sectionRef.current || !textRef.current) return;
     const { left, top, width, height } = sectionRef.current.getBoundingClientRect();
-    const nx = ((e.clientX - left) / width - 0.5) * 2;
-    const ny = ((e.clientY - top) / height - 0.5) * 2;
-    textRef.current.style.transform = `translate3d(${nx * 14}px, ${ny * 8}px, 0)`;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    rafRef.current = requestAnimationFrame(() => {
+      if (!textRef.current) return;
+      const nx = ((clientX - left) / width - 0.5) * 2;
+      const ny = ((clientY - top) / height - 0.5) * 2;
+      textRef.current.style.transform = `translate3d(${nx * 14}px, ${ny * 8}px, 0)`;
+    });
   }, []);
 
   const handleMouseLeave = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
     if (!textRef.current) return;
     textRef.current.style.transform = 'translate3d(0px, 0px, 0)';
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
   }, []);
 
   const { scrollY } = useScroll();

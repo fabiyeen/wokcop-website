@@ -59,19 +59,12 @@ export default async function FilmDetailPage({ params }: { params: Promise<{ slu
   }
 
   const posterImageUrl = film?.posterImage?.asset?._ref 
-    ? urlFor(film.posterImage).width(1200).quality(95).auto('format').url() 
-    : (film?.heroImage?.asset?._ref ? urlFor(film.heroImage).width(1200).quality(95).auto('format').url() : null);
+    ? urlFor(film.posterImage).width(1200).quality(80).auto('format').url() 
+    : (film?.heroImage?.asset?._ref ? urlFor(film.heroImage).width(1200).quality(80).auto('format').url() : null);
     
   const heroImageUrl = film?.heroImage?.asset?._ref 
-    ? urlFor(film.heroImage).width(2000).quality(95).auto('format').url() 
-    : (film?.posterImage?.asset?._ref ? urlFor(film.posterImage).width(2000).quality(95).auto('format').url() : null);
-
-  console.log('[Sanity Debug]', {
-    title: film?.title,
-    posterImageUrl,
-    heroImageUrl,
-    posterImageRaw: film?.posterImage,
-  });
+    ? urlFor(film.heroImage).width(1920).quality(80).auto('format').url() 
+    : (film?.posterImage?.asset?._ref ? urlFor(film.posterImage).width(1920).quality(80).auto('format').url() : null);
 
   return (
     <main className="min-h-screen bg-wokcop-bg text-wokcop-dark font-sans relative">
@@ -110,6 +103,7 @@ export default async function FilmDetailPage({ params }: { params: Promise<{ slu
               src={posterImageUrl} 
               alt={`${film.title} Poster`} 
               className="w-full h-auto rounded-xl shadow-2xl block"
+              loading="lazy"
             />
           ) : (
             <div className="w-full aspect-[2/3] bg-[#222] rounded-xl flex items-center justify-center shadow-2xl">
