@@ -58,8 +58,6 @@ export default function StudioCollageSection({ galleryUrls, description }: Props
                   height: style.height,
                   zIndex: style.zIndex,
                 }}
-                animate={{ y: [0, -15, 0, 15, 0] }}
-                transition={{ duration: 12 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: i * 0.2 }}
               >
                 <div className="relative w-full h-full border-[8px] border-white shadow-2xl overflow-hidden">
                   <Image

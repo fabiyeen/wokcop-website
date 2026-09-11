@@ -65,13 +65,6 @@ WOKCOP PICTURES TIDAK HANYA MEREKAM GAMBAR TETAPI MENGHIDUPKAN CERITA DAN MENYIS
                    top: '50%',
                    marginTop: '-15%', // center offset roughly
                  }}
-                 animate={{ y: yOffset }}
-                 transition={{ 
-                   duration: 5 + (i % 3), // varied duration so they don't move in total sync
-                   repeat: Infinity, 
-                   ease: 'easeInOut',
-                   delay: i * 0.4 // staggered start
-                 }}
                >
                  <Image 
                    src={src} 

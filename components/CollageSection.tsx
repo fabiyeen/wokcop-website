@@ -59,8 +59,6 @@ export default function CollageSection({ galleryUrls, description }: Props) {
                 x: '-50%',
                 y: '-50%',
               }}
-              animate={{ y: ['-50%', '-52%', '-50%', '-48%', '-50%'] }}
-              transition={{ duration: 12 + (i % 4), repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
             >
               <div className="relative w-[320px] h-[400px] border-[8px] border-white shadow-2xl overflow-hidden">
                 <Image
