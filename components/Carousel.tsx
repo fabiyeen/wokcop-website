@@ -17,7 +17,7 @@ interface CarouselItem {
 function isVideoUrl(url?: string): boolean {
   if (!url) return false;
   const cleanUrl = url.split('?')[0].toLowerCase();
-  return cleanUrl.endsWith('.mp4') || cleanUrl.endsWith('.webm') || url.toLowerCase().includes('.mp4') || url.toLowerCase().includes('.webm');
+  return cleanUrl.endsWith('.mp4') || cleanUrl.endsWith('.webm') || cleanUrl.endsWith('.mov') || cleanUrl.includes('.mp4') || cleanUrl.includes('.webm');
 }
 
 function getYouTubeEmbedUrl(url: string) {
@@ -51,6 +51,7 @@ function CarouselCard({
   onSelectCommercial,
 }: CardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   let offset = (index - activeIndex) % totalItems;
@@ -72,8 +73,21 @@ function CarouselCard({
         hoverTimeoutRef.current = null;
       }
       setIsHovered(false);
+      setIsVideoReady(false);
     }
   }, [isCenter]);
+
+  // Reset video ready when slide index changes
+  useEffect(() => {
+    setIsVideoReady(false);
+  }, [activeIndex]);
+
+  // Reset video ready when hover ends
+  useEffect(() => {
+    if (!isHovered) {
+      setIsVideoReady(false);
+    }
+  }, [isHovered]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -101,6 +115,7 @@ function CarouselCard({
       hoverTimeoutRef.current = null;
     }
     setIsHovered(false);
+    setIsVideoReady(false);
   }, []);
 
   let x = '0%';
@@ -132,6 +147,7 @@ function CarouselCard({
 
   const hoverMedia = item.hoverMediaUrl || item.hoverGifUrl;
   const isVideo = isVideoUrl(hoverMedia);
+  const shouldFadePoster = isCenter && isHovered && hoverMedia && (isVideo ? isVideoReady : true);
 
   const cardInner = (
     <div 
@@ -146,7 +162,7 @@ function CarouselCard({
         src={item.image}
         alt={item.title || "Project image"}
         fill
-        className={`object-cover object-center z-0 transition-opacity duration-300 ${isCenter && isHovered && hoverMedia ? 'opacity-0' : 'opacity-100'}`}
+        className={`object-cover object-center z-0 transition-opacity duration-300 ${shouldFadePoster ? 'opacity-0' : 'opacity-100'}`}
         sizes="(max-width: 768px) 300px, 450px"
         loading="lazy"
         unoptimized
@@ -165,13 +181,27 @@ function CarouselCard({
           >
             {isVideo ? (
               <video
+                ref={(el) => {
+                  if (el) {
+                    el.defaultMuted = true;
+                    el.muted = true;
+                    const promise = el.play();
+                    if (promise !== undefined) {
+                      promise.catch(() => {
+                        // Suppress browser autoplay rejection
+                      });
+                    }
+                  }
+                }}
                 src={hoverMedia}
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="none"
-                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+                preload={isCenter ? "auto" : "none"}
+                onCanPlay={() => setIsVideoReady(true)}
+                onLoadedData={() => setIsVideoReady(true)}
+                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-opacity duration-300 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
               />
             ) : (
               <Image
